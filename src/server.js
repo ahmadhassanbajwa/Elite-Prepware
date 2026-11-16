@@ -17,7 +17,7 @@ app.use(express.static(fileURLToPath(new URL('../public', import.meta.url))));
 
 app.get('/auth/dev-credentials', (req, res) => {
   const origin = req.get('origin');
-  const loopbackOrigin = origin && (() => {
+  const loopbackOrigin = !origin || (() => {
     try {
       const hostname = new URL(origin).hostname;
       return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
