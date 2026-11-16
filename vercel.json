@@ -6,11 +6,6 @@
       "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "src/server.js": {
-      "includeFiles": "public/**"
-    }
-  },
   "routes": [
     {
       "src": "/(.*)",
