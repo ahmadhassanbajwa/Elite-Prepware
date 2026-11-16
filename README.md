@@ -8,6 +8,16 @@
 
 All `/api/*` routes need `Authorization: Bearer <supabase user JWT>` for an admin.
 
+## Deploying to Vercel
+
+The included `vercel.json` routes requests to the Express app as a Vercel Node.js function and includes the dashboard files. In the Vercel project settings, set the Root Directory to the repository root and add these Environment Variables for every environment you deploy:
+
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (server-side only; never use a `NEXT_PUBLIC_` prefix)
+
+Optionally set `COMPANY_NAME` and `COMPANY_ADDRESS`. Redeploy after adding or changing environment variables. Do not upload `.env` or `node_modules` to GitHub.
+
 | Area | Routes |
 |---|---|
 | Clients | `GET/POST /api/clients`, `GET/PATCH /api/clients/:id` |

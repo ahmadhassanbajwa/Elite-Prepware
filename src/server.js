@@ -65,5 +65,9 @@ app.use('/api/storage', storage);
 app.use('/api/invoices', invoices);
 app.use(errorHandler);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Eliteprepware API on :${port}`));
+if (!process.env.VERCEL) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log(`Eliteprepware API on :${port}`));
+}
+
+export default app;
