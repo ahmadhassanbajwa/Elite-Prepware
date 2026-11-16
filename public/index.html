@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eliteprepware | Warehouse</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=ranade@400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- =========================================
+       1. AUTHENTICATION VIEW (LOGIN)
+       ========================================= -->
+  <div id="auth-view" class="auth-wrapper" style="display: none;">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo-badge">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="auth-title">Eliteprepware</div>
+          <div class="auth-subtitle">Warehouse operations</div>
+        </div>
+      </div>
+
+      <div class="auth-header">
+        <h2>Sign in to Dashboard</h2>
+      </div>
+
+      <div id="login-error-msg" style="display: none; background: var(--danger-subtle); color: var(--danger-text); border: 1px solid var(--danger-border); padding: 10px 14px; border-radius: var(--radius-md); font-size: 13px; margin-bottom: 14px;"></div>
+
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="input-email">Email Address</label>
+          <input 
+            type="email" 
+            id="input-email" 
+            class="form-input" 
+            placeholder="admin@eliteprepware.com" 
+            required 
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-password">Password</label>
+          <div style="display: flex; gap: 8px;">
+            <input 
+              type="password" 
+              id="input-password" 
+              class="form-input" 
+              placeholder="••••••••••••" 
+              required 
+              autocomplete="current-password"
+              style="flex: 1;"
+            />
+            <button type="button" class="btn" id="toggle-password-btn" style="padding: 0 14px; font-size: 12.5px;">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-actions">
+          <button type="button" class="btn" id="fill-dev-credentials" hidden>Fill login</button>
+          <button type="submit" class="btn btn-primary" id="btn-signin">
+            Sign in
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================
+       2. ENTERPRISE APP SHELL
+       ========================================= -->
+  <div id="app-view" class="app-layout" style="display: none;">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="sidebar-brand-name">
+          <span>Eliteprepware</span>
+          <span class="sidebar-brand-badge">Warehouse OS</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="overview">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>Overview</span>
+        </button>
+
+        <button class="nav-item" data-tab="storage">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          <span>Storage</span>
+        </button>
+
+        <button class="nav-item" data-tab="clients">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span>Clients</span>
+        </button>
+
+        <button class="nav-item" data-tab="workers">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <span>Team</span>
+        </button>
+
+        <button class="nav-item" data-tab="pricing">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+          <span>Pricing</span>
+        </button>
+
+        <button class="nav-item" data-tab="invoices">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Invoices</span>
+        </button>
+      </nav>
+
+      <!-- User Profile Card -->
+      <div class="sidebar-footer">
+        <div class="user-profile-card">
+          <div class="user-avatar">AD</div>
+          <div class="user-meta">
+            <div class="user-email" id="current-user-email">admin</div>
+            <div class="user-role-badge">Super Admin</div>
+          </div>
+          <button class="btn-signout" title="Sign out of software">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Backdrop for Mobile/Tablet Drawer -->
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <!-- Main Workspace -->
+    <main class="main-workspace">
+      
+      <!-- Top Navigation Bar -->
+      <header class="top-navbar">
+        <div class="top-nav-left">
+          <button class="btn btn-sm btn-icon-only mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+          <h1 class="page-title" id="current-page-title">Overview</h1>
+          <div class="system-status-indicator">
+            <span class="status-dot"></span>
+            <span class="status-label">Live System</span>
+          </div>
+        </div>
+
+        <div class="top-nav-right">
+          <button class="btn btn-sm" onclick="showNewIntakeModal()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Quick Intake
+          </button>
+          <button class="btn btn-sm btn-primary" onclick="showGenerateInvoiceModal()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            New Invoice
+          </button>
+        </div>
+      </header>
+
+      <!-- Tab Content Area -->
+      <div class="content-body" id="workspace-content">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Main Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
