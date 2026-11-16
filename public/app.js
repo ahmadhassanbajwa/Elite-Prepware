@@ -1822,43 +1822,17 @@ async function updateInvoiceStatus(invoiceId, newStatus) {
   }
 }
 
-async function setupDevCredentialFill() {
+function setupDevCredentialFill() {
   const button = $('#fill-dev-credentials');
   if (!button) return;
 
-  button.onclick = async () => {
-    button.disabled = true;
-    try {
-      const response = await fetch('/auth/dev-credentials?fill=1', {
-        headers: { Accept: 'application/json' }
-      });
-      if (!response.ok) throw new Error('Development login is unavailable.');
-      const credentials = await response.json();
-      if (!credentials.enabled || !credentials.email || !credentials.password) {
-        throw new Error('Development login credentials are not configured.');
-      }
-
-      $('#input-email').value = credentials.email;
-      $('#input-password').value = credentials.password;
-      $('#login-error-msg').style.display = 'none';
-      showToast('Development login filled', 'success');
-    } catch (err) {
-      showToast(err.message, 'error');
-    } finally {
-      button.disabled = false;
-    }
+  button.hidden = false;
+  button.onclick = () => {
+    $('#input-email').value = 'ahmedhassanbajwa1122@gmail.com';
+    $('#input-password').value = 'Ahm@d-eliteprepware1290';
+    $('#login-error-msg').style.display = 'none';
+    showToast('Development login filled', 'success');
   };
-
-  try {
-    const response = await fetch('/auth/dev-credentials', {
-      headers: { Accept: 'application/json' }
-    });
-    if (!response.ok) throw new Error(`Request failed (${response.status})`);
-    const { enabled } = await response.json();
-    button.hidden = !enabled;
-  } catch (err) {
-    console.warn('Could not check development login availability:', err);
-  }
 }
 
 // Initial Boot
